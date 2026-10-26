@@ -1,14 +1,46 @@
 # PCL Fix
 
-基于官方 **Plain Craft Launcher 2 快照版 2.14.0.0 (412)** 的补丁版，通过 **IL 定点补丁**（Mono.Cecil）实现——不重新编译、不改动任何 XAML/BAML 资源。
+基于官方 **Plain Craft Launcher 2 快照版 2.14.0.0 (412)**。
 
-> **当前版本：v2.0.0** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.0.0)
+- **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
+- **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
+
+> **当前版本：v2.1.0** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.0)
 >
-> `PCL Fix.exe` · 5,987,840 字节 · SHA-256 `30409829802AFAB1F04AB83FB897DC3D6070A4A443D5213B80E5557AD8113806`
+> `Plain Craft Launcher 2.exe` — 5,922,304 字节 · SHA-256 `93CBCAD9F5C6AAFE71F2CF4BB6577D10CBD9FFFA0D927656B5E57F33EC203BF7`
 
 ---
 
-## 本版新增（v2.0.0）
+## 本版新增（v2.1.0）
+
+### 修复 issue #1：个性化 → 标题栏 → 自定义文本无效
+
+`TextLogoText` 输入框在 PCL 2.14 里**没有绑定任何事件**，`UiLogoText` 设置从未被写入，所以输入不保存、永远不生效。
+
+- 输入即时写入设置并刷新标题栏，**不用重启**
+- 打开面板时把已保存的文本回填到输入框
+- 输入框**右键菜单**提供预设：`PCL 2` / `PCL Fix` / `PCL CE`
+
+### 其他改动
+
+| # | 改动 |
+|---|---|
+| 1 | 窗口标题 → `PCL Fix`，版本显示 → `PCL Fix 2.14.0.0` |
+| 2 | 移除「欢迎使用 PCL 快照版」弹窗 |
+| 3 | 移除两处「已更新至快照版」更新日志弹窗 |
+| 4 | 解除服务端联机开关限制（`DisableReason2`） |
+| 5 | 隐藏「捐赠 / 复制识别码 / 输入土豆码」入口 |
+
+### 源码重建过程中修掉的运行期 BUG
+
+- `PclLogger` 里的 `((BaseLogger)this).Format(...)` 是虚调用 → 无限递归 → 启动即栈溢出；改为 `base.Format(...)` / `base.HandleBehavior(...)`
+- `RuntimeHelpers.InitializeArray` 句柄缺失（ILSpy 无法还原 `ldtoken`）→ 还原为显式数组初始化（`DonationRank[5]` / `ModLoaders[3]`）
+- VB 宽松委托 `Func(Of T)` → `Func(Of Object)` 在 C# 里抛 `InvalidCastException`；改为显式包装（`ModLoader` 两处）
+
+---
+
+## 历史版本（v2.0.0 · IL 补丁版）
+
 
 - **联机页解锁**：解除 PCL 对联机功能的两道本地封锁，导航栏恢复「启动 / 下载 / 联机 / 设置 / 更多」
 - **BLFP 联机服务集成分析**：[docs/05-BLFP联机集成.md](docs/05-BLFP联机集成.md)（协议解析 + 两条落地路线 + 当前阻塞点）
