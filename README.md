@@ -5,13 +5,25 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.1.0** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.0)
+> **当前版本：v2.1.1** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.1)
 >
-> `Plain Craft Launcher 2.exe` — 5,922,304 字节 · SHA-256 `93CBCAD9F5C6AAFE71F2CF4BB6577D10CBD9FFFA0D927656B5E57F33EC203BF7`
+> `Plain Craft Launcher 2.exe` — 5,923,840 字节 · SHA-256 `D236631A52DA8F85BD3014ADC02AFCA96101B571BF45500FB8EA4B587337F465`
 
 ---
 
-## 本版新增（v2.1.0）
+## 本版新增（v2.1.1）
+
+- **自动更新**：设置 → 关于 → 检查更新 → 查 GitHub Release、经 ghproxy 镜像下载、覆盖后自动重启（新增 `PCL/ModUpdateFix.cs`）
+- **标题栏预设可见化**：自定义文本框右侧新增「预设」按钮（`PCL 2` / `PCL Fix` / `PCL CE`），不再只靠右键
+- 版本号 → `PCL Fix 2.1.1`
+
+### 关于旧数据
+
+设置在 `PCL\Setup.ini`，实例存档在 `.minecraft\`，识别码在 `HKCU\Software\PCL`。**升级时请把压缩包内容覆盖到原来的 PCL Fix 文件夹**，不要新建文件夹。
+
+---
+
+## 历史版本（v2.1.0）
 
 ### 修复 issue #1：个性化 → 标题栏 → 自定义文本无效
 
