@@ -5,13 +5,23 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.1.1** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.1)
+> **当前版本：v2.1.2** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.2)
 >
-> `Plain Craft Launcher 2.exe` — 5,923,840 字节 · SHA-256 `D236631A52DA8F85BD3014ADC02AFCA96101B571BF45500FB8EA4B587337F465`
+> `Plain Craft Launcher 2.exe` — 5,923,840 字节 · SHA-256 `ECB797E7511E8D87E3B1DA31A7DA599DDBCFEE68C2C8602FCCCF44255FE2027B`
 
 ---
 
-## 本版新增（v2.1.1）
+## 本版修复（v2.1.2）
+
+自更新的「应用」环节会静默失败（v2.1.1 引入），三处问题：
+
+1. 更新脚本用 `Encoding.Default`(GBK) 写盘却 `chcp 65001`，**中文路径会乱码**，`xcopy` 报 `File not found` → 改为 **UTF-8 带 BOM** 写盘（已实测对照）
+2. 固定等 2 秒就复制，主程序未退出时文件被占用 → 改为 `tasklist` 轮询等待（最多 60 秒）
+3. 失败完全静默 → 改为 `explorer` 打开新文件目录，并把过程写入 `%TEMP%\pclfix_update.log`
+
+---
+
+## 历史版本（v2.1.1）
 
 - **自动更新**：设置 → 关于 → 检查更新 → 查 GitHub Release、经 ghproxy 镜像下载、覆盖后自动重启（新增 `PCL/ModUpdateFix.cs`）
 - **标题栏预设可见化**：自定义文本框右侧新增「预设」按钮（`PCL 2` / `PCL Fix` / `PCL CE`），不再只靠右键
