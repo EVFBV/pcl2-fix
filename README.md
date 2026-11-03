@@ -7,7 +7,7 @@
 
 > **当前版本：v2.1.2** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.2)
 >
-> `Plain Craft Launcher 2.exe` — 5,923,840 字节 · SHA-256 `ECB797E7511E8D87E3B1DA31A7DA599DDBCFEE68C2C8602FCCCF44255FE2027B`
+> `Plain Craft Launcher 2.exe` — 5,927,936 字节 · SHA-256 `ECB797E7511E8D87E3B1DA31A7DA599DDBCFEE68C2C8602FCCCF44255FE2027B`
 
 ---
 
