@@ -5,13 +5,21 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.1.2** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.2)
+> **当前版本：v2.1.3** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.3)
 >
-> `Plain Craft Launcher 2.exe` — 5,927,936 字节 · SHA-256 `ECB797E7511E8D87E3B1DA31A7DA599DDBCFEE68C2C8602FCCCF44255FE2027B`
+> `Plain Craft Launcher 2.exe` — 5,928,448 字节 · SHA-256 `87ACECE4F9E843D2CBE8E12963C3C70818845219DB8B58C84C8C93DF1FD103B3`
 
 ---
 
-## 本版修复（v2.1.2）
+## 本版修复（v2.1.3）
+
+标题栏「预设」按钮位置错：`PanLogoText` 是两列 Grid，按钮没设 `Grid.Column` 就落在第 0 列，压在「标题栏文本」标签上。
+
+修法：`Grid.SetColumn(presetButton, 1)` 放到输入框列，并给输入框右侧留 52px。
+
+---
+
+## 历史版本（v2.1.2）
 
 自更新的「应用」环节会静默失败（v2.1.1 引入），三处问题：
 
