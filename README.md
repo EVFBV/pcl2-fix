@@ -5,13 +5,21 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.1.3** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.3)
+> **当前版本：v2.1.4** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.4)
 >
-> `Plain Craft Launcher 2.exe` — 5,928,448 字节 · SHA-256 `87ACECE4F9E843D2CBE8E12963C3C70818845219DB8B58C84C8C93DF1FD103B3`
+> `Plain Craft Launcher 2.exe` — 5,928,448 字节 · SHA-256 `0EFEC8B810E7113A244BBBB22FC85E958E16B03D0E43EC88846F85E54E931ADA`
 
 ---
 
-## 本版修复（v2.1.3）
+## 本版修复（v2.1.4）
+
+自动更新可能装错包：原来取「第一个 .zip 资产」，而 v2.0.0 的资产顺序是 `PCL-Fix-docs.zip | PCL-Fix-v2.0.0.zip | PCL-Unlock-v1.1.zip`，会选中文档包覆盖到程序目录。
+
+修法：优先匹配名字含 `PCL-Fix-v` 的 zip，找不到才退回第一个 zip（已用 v2.0.0 真实资产列表验证）。
+
+---
+
+## 历史版本（v2.1.3）
 
 标题栏「预设」按钮位置错：`PanLogoText` 是两列 Grid，按钮没设 `Grid.Column` 就落在第 0 列，压在「标题栏文本」标签上。
 
