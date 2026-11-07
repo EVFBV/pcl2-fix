@@ -53,9 +53,9 @@
 
 ### 修复 issue #1：个性化 → 标题栏 → 自定义文本无效
 
-`TextLogoText` 输入框在 PCL 2.14 里**没有绑定任何事件**，`UiLogoText` 设置从未被写入，所以输入不保存、永远不生效。
+保存链路原本是通的（`MyTextBox` 实现 `ISettingControl`，`ValidatedTextChanged` 会写 `UiLogoText`），但**改完没人调用 `UpdateBackgroundAndTitleBar()`**，标题栏不重绘，看起来就是「输入没效果」。
 
-- 输入即时写入设置并刷新标题栏，**不用重启**
+- 文本变更后即时刷新标题栏，**不用重启**
 - 打开面板时把已保存的文本回填到输入框
 - 输入框**右键菜单**提供预设：`PCL 2` / `PCL Fix` / `PCL CE`
 
