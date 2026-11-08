@@ -5,13 +5,21 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.1.4** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.4)
+> **当前版本：v2.1.5** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.5)
 >
-> `Plain Craft Launcher 2.exe` — 5,928,448 字节 · SHA-256 `0EFEC8B810E7113A244BBBB22FC85E958E16B03D0E43EC88846F85E54E931ADA`
+> `Plain Craft Launcher 2.exe` — 5,928,448 字节 · SHA-256 `74FAD779D0CDB8B8D8C6800AABA84954985F05318F810E156E646E5BECEC00BA`
 
 ---
 
-## 本版修复（v2.1.4）
+## 本版修复（v2.1.5）
+
+自更新完成后不清理临时目录：每次更新在 `%TEMP%\PCL\UpdateFix_<版本>\` 留下约 14 MB（zip + 解压副本），从不删除。
+
+修法：覆盖成功后 `rmdir /s /q` 清理；失败分支不清理（保留给用户手动复制）。
+
+---
+
+## 历史版本（v2.1.4）
 
 自动更新可能装错包：原来取「第一个 .zip 资产」，而 v2.0.0 的资产顺序是 `PCL-Fix-docs.zip | PCL-Fix-v2.0.0.zip | PCL-Unlock-v1.1.zip`，会选中文档包覆盖到程序目录。
 
