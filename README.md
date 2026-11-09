@@ -5,13 +5,21 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.1.6** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.6)
+> **当前版本：v2.1.7** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.7)
 >
-> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `29A82E93DEE7C9AEED1CCD6CDDC16368BBFCE61C381D7F2E394442A59D13D9C6`
+> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `121BC92C82433DBD06FECB1A4B5CC4270648A4EF9D43840D2520645C720E40E6`
 
 ---
 
-## 本版修复（v2.1.6）
+## 本版改进（v2.1.7）
+
+下载改多源依次尝试：`ghproxy.net → gh-proxy.com → ghfast.top → GitHub 直连`，每个源都校验 zip 魔数，全失败才报错。
+
+起因：v2.1.6 报告 ghproxy.net 返回 500，本轮复查它又恢复 200 —— 镜像会波动，单源不可靠。实测 7 个候选源，3 个可用、4 个失败（超时/SSL/DNS）。
+
+---
+
+## 历史版本（v2.1.6）
 
 自更新下载内容不校验：原来只判「长度 > 1024 字节」就当有效 zip。镜像站若返回 HTTP 200 + HTML 错误页（错误页也可能上千字节），会被误判、解压失败、更新中断。
 
