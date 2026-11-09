@@ -5,13 +5,23 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.1.5** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.5)
+> **当前版本：v2.1.6** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.6)
 >
-> `Plain Craft Launcher 2.exe` — 5,928,448 字节 · SHA-256 `74FAD779D0CDB8B8D8C6800AABA84954985F05318F810E156E646E5BECEC00BA`
+> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `29A82E93DEE7C9AEED1CCD6CDDC16368BBFCE61C381D7F2E394442A59D13D9C6`
 
 ---
 
-## 本版修复（v2.1.5）
+## 本版修复（v2.1.6）
+
+自更新下载内容不校验：原来只判「长度 > 1024 字节」就当有效 zip。镜像站若返回 HTTP 200 + HTML 错误页（错误页也可能上千字节），会被误判、解压失败、更新中断。
+
+修法：校验 zip 魔数 `PK\x03\x04`，不合格退回直连；直连也不是 zip 则明确报错并给出下载页。
+
+> 实测 ghproxy.net 当前返回 HTTP 500，会退回 GitHub 直连，功能不受影响。
+
+---
+
+## 历史版本（v2.1.5）
 
 自更新完成后不清理临时目录：每次更新在 `%TEMP%\PCL\UpdateFix_<版本>\` 留下约 14 MB（zip + 解压副本），从不删除。
 
