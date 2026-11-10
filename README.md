@@ -5,13 +5,21 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.1.7** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.7)
+> **当前版本：v2.1.8** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.8)
 >
-> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `121BC92C82433DBD06FECB1A4B5CC4270648A4EF9D43840D2520645C720E40E6`
+> `Plain Craft Launcher 2.exe` — 5,929,472 字节 · SHA-256 `B1898D13B82F4D6B3F8098876FE86117CA59067E85210179BE9FD4D454B48C57`
 
 ---
 
-## 本版改进（v2.1.7）
+## 本版修复（v2.1.8）
+
+资产缺少 `browser_download_url` 时空引用崩溃（对 `name` 判空了、对这个字段漏了），用户只看到「未将对象引用设置到对象的实例」。
+
+修法：跳过无地址资产并记日志；全都没有则提示手动下载。已用 3 组数据单测（真实 release / 部分缺 URL / 全部缺 URL）。
+
+---
+
+## 历史版本（v2.1.7）
 
 下载改多源依次尝试：`ghproxy.net → gh-proxy.com → ghfast.top → GitHub 直连`，每个源都校验 zip 魔数，全失败才报错。
 
