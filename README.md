@@ -5,13 +5,24 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.1.8** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.8)
+> **当前版本：v2.1.9** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.9)
 >
-> `Plain Craft Launcher 2.exe` — 5,929,472 字节 · SHA-256 `B1898D13B82F4D6B3F8098876FE86117CA59067E85210179BE9FD4D454B48C57`
+> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `03437517020DFE3157438B38D5BE275733696C349681F478007189F2AE9D674F`
 
 ---
 
-## 本版修复（v2.1.8）
+## 本版修复（v2.1.9）
+
+把「IL 补丁版」换成「源码重建版」时漏搬了两处改动（回退）：
+
+1. **匿名数据收集没真正关闭** —— `ModMain.Telemetry` 仍在往腾讯云 CLS 上报（启动/崩溃/下载失败/联机失败/错误日志共 10 处）。现已改为直接 `return`，勾选框也隐藏。
+2. **设置页「复制识别码 / 输入土豆码」整行仍可见** —— `PanDonate.Visibility` 没改成 `Collapsed`。现已恢复隐藏，并去掉更新项里的土豆码说明。
+
+> 关于页的「赞助作者」按钮保留（按「其他都留着」的要求）。
+
+---
+
+## 历史版本（v2.1.8）
 
 资产缺少 `browser_download_url` 时空引用崩溃（对 `name` 判空了、对这个字段漏了），用户只看到「未将对象引用设置到对象的实例」。
 
