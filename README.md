@@ -5,13 +5,24 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.1.9** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.1.9)
+> **当前版本：v2.2.0** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.2.0)
 >
-> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `03437517020DFE3157438B38D5BE275733696C349681F478007189F2AE9D674F`
+> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `01A22F47A1988355BC602E32CE45B5E68F974769567A93AB2C4F0963DFBBD290`
 
 ---
 
-## 本版修复（v2.1.9）
+## 本版修复（v2.2.0）
+
+补回 v2.0.0 的两处改动（源码重建时漏搬）：
+
+1. **「悲报」弹窗仍会出现** —— `isUpdate=true` 的服务端公告没有被跳过。现改为跳过所有 isUpdate 公告，活动类公告照常显示。
+2. **启动页「快照版 PCL…」提示条仍会显示** —— `PanHint` 条件是 `CurrentRank < 23`，非赞助者必然满足。现固定 `Collapsed`。
+
+至此 v2.0.0 的补丁点已全部在源码层覆盖（详见 release notes 的对照表）。
+
+---
+
+## 历史版本（v2.1.9）
 
 把「IL 补丁版」换成「源码重建版」时漏搬了两处改动（回退）：
 
