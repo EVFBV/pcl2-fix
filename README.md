@@ -5,13 +5,23 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.2.0** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.2.0)
+> **当前版本：v2.2.1** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.2.1)
 >
-> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `01A22F47A1988355BC602E32CE45B5E68F974769567A93AB2C4F0963DFBBD290`
+> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `631990267FF16EE3D39FF3A076DD51CA7036C381C588FCA2BEE7BD8607895D68`
 
 ---
 
-## 本版修复（v2.2.0）
+## 本版修复（v2.2.1）
+
+PE 版本资源仍是原版信息：资源管理器「属性 → 详细信息」读的是 Win32 版本资源（来自 `AssemblyInfo.cs`），之前只改了程序内显示的版本。
+
+现在：文件说明 `PCL Fix 启动器`、产品名称 `PCL Fix`、文件版本 `2.2.1.0`、产品版本 `PCL Fix 2.2.1`（版权行保留原作者，`AssemblyVersion` 保持 2.14.0.0 以免影响 XAML 绑定）。
+
+至此 v2.0.0 的补丁点在源码层已全部覆盖。
+
+---
+
+## 历史版本（v2.2.0）
 
 补回 v2.0.0 的两处改动（源码重建时漏搬）：
 
