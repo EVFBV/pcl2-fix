@@ -5,13 +5,21 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.2.1** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.2.1)
+> **当前版本：v2.2.2** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.2.2)
 >
-> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `631990267FF16EE3D39FF3A076DD51CA7036C381C588FCA2BEE7BD8607895D68`
+> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `1649636232ECC28715A36CBB99446EACBFB758489F98C140311479B961AA74C5`
 
 ---
 
-## 本版修复（v2.2.1）
+## 本版修复（v2.2.2）
+
+关于页的版本号是硬编码的 `快照版 2.14.0.0`，不跟 `VersionDisplay` 走（上一版我判断错了，这轮核实纠正）。同类硬编码还有启动日志、游戏日志两处，一并改为 `ModBase.VersionDisplay`。
+
+同时把版本号来源收敛成 `apply_pclfix.ps1` 顶部唯一一个 `$fixVer`，程序内显示 / PE 文件版本 / 产品版本都由它生成。
+
+---
+
+## 历史版本（v2.2.1）
 
 PE 版本资源仍是原版信息：资源管理器「属性 → 详细信息」读的是 Win32 版本资源（来自 `AssemblyInfo.cs`），之前只改了程序内显示的版本。
 
