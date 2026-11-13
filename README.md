@@ -5,13 +5,21 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.2.2** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.2.2)
+> **当前版本：v2.2.3** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.2.3)
 >
-> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `1649636232ECC28715A36CBB99446EACBFB758489F98C140311479B961AA74C5`
+> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `9B629589960F053BCFE58FF87CB35EF731D7F40D7BA3FCDE385126D7DD4F7923`
 
 ---
 
-## 本版修复（v2.2.2）
+## 本版修复（v2.2.3）
+
+联机页收集 peer 时无条件读 `Link["MandatoryPeers"]`，该键缺失会 `ArgumentNullException`（同段的 `EnableForcedPeer` 有 `ContainsKey` 判断，只有它漏了）。
+
+现改为判空 + 判 `JTokenType.Array`。当前服务端该字段存在（空数组），尚未触发；但联机功能处于「暂时关闭」，字段被裁是现实可能。
+
+---
+
+## 历史版本（v2.2.2）
 
 关于页的版本号是硬编码的 `快照版 2.14.0.0`，不跟 `VersionDisplay` 走（上一版我判断错了，这轮核实纠正）。同类硬编码还有启动日志、游戏日志两处，一并改为 `ModBase.VersionDisplay`。
 
