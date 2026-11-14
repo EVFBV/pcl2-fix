@@ -5,13 +5,21 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.2.3** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.2.3)
+> **当前版本：v2.2.4** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.2.4)
 >
-> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `9B629589960F053BCFE58FF87CB35EF731D7F40D7BA3FCDE385126D7DD4F7923`
+> `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `85B277CC358F24C07191AE227A072F92F2E3A62FFD7B21C14DFB34922CA0CDE8`
 
 ---
 
-## 本版修复（v2.2.3）
+## 本版修复（v2.2.4）
+
+关于页列表项标题仍显示「Plain Craft Launcher 2」——该 `Title` 是 BAML 里的字面量，改代码改不到。现在在 `PageOtherAbout_Loaded` 里运行时覆盖为 `PCL Fix`。
+
+（这是「关于页产品名」这一项的第三次修正：v2.2.0 误判为已覆盖、v2.2.2 修了版本号那行、v2.2.4 补上标题。）
+
+---
+
+## 历史版本（v2.2.3）
 
 联机页收集 peer 时无条件读 `Link["MandatoryPeers"]`，该键缺失会 `ArgumentNullException`（同段的 `EnableForcedPeer` 有 `ContainsKey` 判断，只有它漏了）。
 
