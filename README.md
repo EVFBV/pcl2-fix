@@ -5,13 +5,28 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.2.4** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.2.4)
+> **当前版本：v2.2.5** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.2.5)
 >
 > `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `85B277CC358F24C07191AE227A072F92F2E3A62FFD7B21C14DFB34922CA0CDE8`
 
 ---
 
-## 本版修复（v2.2.4）
+## 本版修复（v2.2.5）
+
+安装目录里带 `%` 时，自动更新会静默失败。
+
+更新器不自己复制文件，而是生成一个 `.cmd`，等主程序退出后用 `xcopy` 覆盖，脚本里直接写入安装路径：
+
+```
+xcopy /y /e /i "…\files\*" "D:\PCL 100%\PCL Fix\" >> %LOG% 2>&1
+```
+
+cmd 里 `%` 是变量分隔符，`100%` 的 `%` 会和后面的 `%LOG%` 配对，吃掉半条命令。实测 `A&B 100%`、`PCL 100%`、`PCL (x86)%` 三种路径全部 `EXIT=4`、0 文件复制，日志里连 `target=` 都没写进去，用户只看到弹出解压目录。
+
+修复：写脚本前把路径里的 `%` 转义成 `%%`（新增 `CmdPath()`），`echo target=` 那行补引号。
+
+反过来说明一下**没有**处理 `&`、`()`、`^` 的原因：它们在双引号内本来就是字面量；给它们加 `^` 反而因为 `^` 在引号内不生效，xcopy 会照字面建出 `A^&B 100%` 这种错误目录 —— 这个我先踩了一遍才确认。
+## 历史版本（v2.2.4）
 
 关于页列表项标题仍显示「Plain Craft Launcher 2」——该 `Title` 是 BAML 里的字面量，改代码改不到。现在在 `PageOtherAbout_Loaded` 里运行时覆盖为 `PCL Fix`。
 
