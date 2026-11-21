@@ -5,13 +5,20 @@
 - **v2.1.0 起**：改为**反编译源码重建**——从 164 个反编译 `.cs` 重新编译，所有改动都在源码层，完全可复现（`build_all.ps1` + `apply_pclfix.ps1`）
 - **v2.0.0**：IL 定点补丁（Mono.Cecil），直接给原版 exe 打补丁
 
-> **当前版本：v2.2.5** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.2.5)
+> **当前版本：v2.2.6** → [下载](https://github.com/EVFBV/pcl2-fix/releases/tag/v2.2.6)
 >
 > `Plain Craft Launcher 2.exe` — 5,928,960 字节 · SHA-256 `85B277CC358F24C07191AE227A072F92F2E3A62FFD7B21C14DFB34922CA0CDE8`
 
 ---
 
-## 本版修复（v2.2.5）
+## 本版修复（v2.2.6）
+
+issue #4：模组版本列表点开就崩（`NullReferenceException`）。
+
+反编译 `ResourceVersion.ToListItem` 时，编译器生成的闭包对象被声明成 `null` 且从不赋值，而「版本摘要」迭代器要靠它回到 `ResourceVersion` 本体取字段（`...Closure_3._0024VB_0024Me.ModLoaders`）→ 第一次 `MoveNext` 就 NRE。所以是版本列表**每一项**都会崩，不是某个模组的问题。
+
+修复：正常构造闭包并填回 `Me` 与三个捕获参数。全库搜 `__localsN = null;` 只有这一处。
+## 历史版本（v2.2.5）
 
 安装目录里带 `%` 时，自动更新会静默失败。
 
